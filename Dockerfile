@@ -1,6 +1,9 @@
 # Use official OpenJDK base image
 FROM eclipse-temurin:17-jdk-jammy
 
+# -------- Stage 1: Build --------
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+
 # Set working directory
 WORKDIR /app
 
