@@ -1,19 +1,27 @@
-# Use official OpenJDK base image
-FROM eclipse-temurin:17-jdk-jammy
 
-# -------- Stage 1: Build --------
-FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Set working directory
+# === Build Stage ===
+FROM maven:3.9.4-eclipse-temurin-17 AS build
+
 WORKDIR /app
 
-# Copy build files
-COPY mvnw pom.xml ./
+COPY pom.xml mvnw ./
 COPY .mvn/ .mvn/
 COPY src/ ./src/
 
-# Build the application
-RUN mvn clean package
+RUN ./mvnw clean package -DskipTests
 
-# Run the application
-CMD ["java", "-jar", "target/url-shortner-0.0.1-SNAPSHOT.jar"]
+# === Runtime Stage ===
+FROM eclipse-temurin:17-jdk-jammy
+
+WORKDIR /app
+
+# Copy only the built JAR file
+COPY --from=build /app/target/url-shortner-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose port (optional, helpful for docs)
+EXPOSE 8085
+
+# Run app using env variables passed at runtime by Render
+CMD ["java", "-jar", "app.jar"]
+
