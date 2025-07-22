@@ -10,7 +10,7 @@ COPY .mvn/ .mvn/
 COPY src/ ./src/
 
 # Build the application
-RUN ./mvnw clean package
+RUN mvn clean package
 
 # Run the application
 CMD ["java", "-jar", "target/url-shortner-0.0.1-SNAPSHOT.jar"]
