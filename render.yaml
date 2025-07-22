@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: your-java-app
+    runtime: java
+    buildCommand: mvn clean package  # or ./gradlew build for Gradle
+    startCommand: java -jar target/url-shortner-0.0.1-SNAPSHOT.jar  # adjust for your output JAR
+    env: java
+    envVars:
+      - key: JAVA_VERSION
+        value: 17  # or your preferred version
