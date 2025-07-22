@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("https://url-shortner-theta-weld.vercel.app/")
 @RestController
 @RequestMapping("short")
 @Slf4j
